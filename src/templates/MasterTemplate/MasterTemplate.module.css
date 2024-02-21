@@ -1,0 +1,4 @@
+.MasterTemplate {
+  display: flex;
+  flex-direction: column;
+}
