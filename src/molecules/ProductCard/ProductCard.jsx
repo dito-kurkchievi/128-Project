@@ -1,12 +1,14 @@
 import classes from "./ProductCard.module.css";
 import { Card } from 'primereact/card';
 import { Button } from 'primereact/button';
+import PropTypes from "prop-types";
 
 
 const ProductCard = (props) => {
+  const { product } = props;
 
   const header = (
-    <img alt="Card" src="https://primefaces.org/cdn/primereact/images/usercard.png" />
+    <img className={classes.img} alt="Card" src={product.images[0]} />
   );
 
 
@@ -20,19 +22,22 @@ const ProductCard = (props) => {
   return (
     <div className={classes.ProductCard}>
       <Card
-        title="Advanced Card"
-        subTitle="Card subtitle"
+        title={product.title}
+        subTitle={`${product.price} ₾`}
         footer={footer}
         header={header}
         className="md:w-25rem"
       >
         <p className="m-0">
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae
-          numquam deserunt quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis esse, cupiditate neque quas!
+          {product.description}
         </p>
       </Card>
     </div>
   );
 };
+
+ProductCard.propTypes = {
+  product: PropTypes.object,
+}
 
 export { ProductCard };

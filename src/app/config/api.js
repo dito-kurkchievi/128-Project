@@ -10,3 +10,10 @@ export const $api = axios.create({
     Authorization: `Bearer ${token()}`
   }
 })
+
+$api.interceptors.request.use((config) => {
+  config.headers = {
+    Authorization: `Bearer ${token()}`
+  }
+  return config;
+})

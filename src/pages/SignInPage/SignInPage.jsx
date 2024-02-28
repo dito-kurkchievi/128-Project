@@ -7,6 +7,9 @@ import * as yup from 'yup';
 import { classNames } from "primereact/utils";
 import { $api, TOKEN_LOCAL_STORAGE_KEY } from "../../app/config/api";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { userActions } from "../../app/store/model/slices/userSlice";
 
 
 const validationSchema = yup.object().shape({
@@ -18,6 +21,10 @@ const validationSchema = yup.object().shape({
 
 const SignInPage = (props) => {
   const navigation = useNavigate();
+  const [authError, setAuthError] = useState(undefined);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const dispatch = useDispatch();
 
   const formik = useFormik({
     validationSchema: validationSchema,
@@ -26,15 +33,31 @@ const SignInPage = (props) => {
       password: "",
     },
     onSubmit: async (values) => {
-      const response = await $api.post('/auth', {
-        email: values.email,
-        password: values.password
-      })
+      setIsLoading(true);
+      try {
+        const response = await $api.post('/auth', {
+          email: values.email,
+          password: values.password
+        })
 
-      localStorage.setItem(TOKEN_LOCAL_STORAGE_KEY, response.data.token);
+        
+        localStorage.setItem(TOKEN_LOCAL_STORAGE_KEY, response.data.token);
+        
+   
+        const userProfile = await $api.get('/profile');
+        setIsLoading(false);
+        
+        if(userProfile.data) {
+          dispatch(userActions.setUser(userProfile.data))
+        }
 
-      if(response.status === 200) {
-        navigation('/');
+        if (response.status === 200) {
+          navigation('/');
+        }
+      }
+      catch(e) {
+        setAuthError('Email or Password is Incorrect');
+        setIsLoading(false);
       }
     }
   })
@@ -77,7 +100,13 @@ const SignInPage = (props) => {
             <span className={classes.error}>{formik.errors.password}</span>
           )}
 
-          <Button onClick={onLoginClicked}>Login</Button>
+          {
+            authError && (
+              <div className={classes.errorContainer}>{authError}</div>
+            )
+          }
+
+          <Button onClick={onLoginClicked} loading={isLoading}>Login</Button>
         </div>
       </Card>
     </div>

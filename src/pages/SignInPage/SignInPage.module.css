@@ -20,4 +20,15 @@
 
 .error {
   color: red;
+  
+}
+
+.errorContainer {
+  width: 100%;
+  height: max-content;
+  padding: 20px;
+  border-radius: 4px;
+  border: 1px solid #ec3b3b;
+  background-color: #ffd7d775;
+  color: #ec3b3b;
 }
