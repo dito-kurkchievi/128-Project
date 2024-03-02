@@ -6,12 +6,17 @@ const initialState = {
   data: undefined,
   isLoading: false,
   error: undefined,
+  productsTotalCount: 0,
 }
 
 const productSlice = createSlice({
   name: 'product',
   initialState,
-  reducers: {},
+  reducers: {
+    setTotalProductsCount(state, action) {
+      state.productsTotalCount = action.payload;
+    }
+  },
   extraReducers: (builder) => {
     builder
       .addCase(getProductsService.pending, (state, action) => {
