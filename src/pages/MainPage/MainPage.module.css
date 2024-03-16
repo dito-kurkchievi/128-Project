@@ -3,3 +3,7 @@
   grid-template-columns: repeat(5, 1fr);
   gap: 20px;
 }
+
+.search {
+  margin-top: 1rem;
+}

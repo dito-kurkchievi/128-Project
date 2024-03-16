@@ -1,5 +1,4 @@
 import './styles/_global.css';
-import { Header } from '../organismes/Header/Header';
 import { Routes, Route } from 'react-router-dom';
 import { MasterTemplate } from '../templates/MasterTemplate/MasterTemplate';
 import { routerConfig } from './config/routerConfig';
@@ -7,6 +6,9 @@ import { useEffect } from 'react';
 import { $api } from './config/api';
 import { useDispatch } from 'react-redux';
 import { userActions } from './store/model/slices/userSlice';
+import { useCartLocalStorage } from './shared/hooks/useCartLocalStorage';
+import { cartActions } from './store/model/slices/cartSlice';
+import { HeaderLazy } from '../organismes/Header/Header.lazy';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -27,12 +29,12 @@ const App = () => {
 
   useEffect(() => {
     checkUser();
-  }, [checkUser])
+  }, [])
 
   const renderWithWrapper = (route) => {
     const Template = () => {
       return (
-        <MasterTemplate Header={route.header && <Header />}>
+        <MasterTemplate Header={route.header && <HeaderLazy />}>
           {<route.element />}
         </MasterTemplate>
       )

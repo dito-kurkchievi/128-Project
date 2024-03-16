@@ -1,0 +1,13 @@
+.card {
+  width: 100%;
+  height: max-content;
+  margin: 1rem 0;
+  display: flex;
+  gap: 2rem;
+}
+
+.card img {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+}

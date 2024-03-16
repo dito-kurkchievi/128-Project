@@ -13,6 +13,12 @@ const cartSlice = createSlice({
     },
     removeFromCart(state, action) {
       state.data = state.data.filter(product => product.id !== action.payload.id);
+    },
+    setCart(state, action) {
+      state.data = action.payload;
+    },
+    clear(state) {
+      state.data = [];
     }
   },
 })

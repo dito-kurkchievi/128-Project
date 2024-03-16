@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { TOKEN_LOCAL_STORAGE_KEY } from "../../../config/api";
 import { getProductsService } from "../services/products/getProductsService";
+import { getSearchProductsService } from "../services/products/getSearchProducts";
 
 const initialState = {
   data: undefined,
@@ -27,6 +28,19 @@ const productSlice = createSlice({
         state.data = action.payload;
       })
       .addCase(getProductsService.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      })
+
+    builder
+      .addCase(getSearchProductsService.pending, (state, action) => {
+        state.isLoading = true;
+      })
+      .addCase(getSearchProductsService.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.data = action.payload;
+      })
+      .addCase(getSearchProductsService.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
       })

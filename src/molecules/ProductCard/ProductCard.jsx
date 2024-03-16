@@ -4,27 +4,34 @@ import { Button } from 'primereact/button';
 import PropTypes from "prop-types";
 import { useDispatch } from "react-redux";
 import { cartActions } from "../../app/store/model/slices/cartSlice";
+import { useCallback, useMemo } from "react";
 
+
+// useMemo, useCallback, memo
 
 const ProductCard = (props) => {
   const { product } = props;
   const dispatch = useDispatch();
 
-  const header = (
-    <img className={classes.img} alt="Card" src={product.images[0]} />
-  );
+  const header = useMemo(() => {
+    return (
+      <img className={classes.img} alt="Card" src={product.images[0]} />
+    );
+  }, [product])
 
-  const onCartAdd = () => {
-    dispatch(cartActions.addToCart(product));
-  }
+  const onCartAdd = useCallback(() => {
+    dispatch(cartActions.addToCart(product))
+  }, [dispatch, product])
 
 
-  const footer = (
-    <div className={classes.actions}>
-      <h3>{product.price}₾</h3>
-      <Button onClick={onCartAdd} icon="pi pi-shopping-cart" className={classes.rounded}/>
-    </div>
-  );
+  const footer = useMemo(() => {
+    return (
+      <div className={classes.actions}>
+        <h3>{product.price}₾</h3>
+        <Button onClick={onCartAdd} icon="pi pi-shopping-cart" className={classes.rounded} />
+      </div>
+    );
+  }, [product, onCartAdd])
 
   return (
     <div className={classes.ProductCard}>

@@ -6,9 +6,9 @@ const NavigationBar = () => {
   return (
     <nav>
       <ul className={classes.navbar}>
-        <li><AppLink to={'/'}>Home</AppLink></li>
-        <li><AppLink to={'/'}>Products</AppLink></li>
-        <li><AppLink to={'/about-us'}>About Us</AppLink></li>
+        <li><AppLink to={'/'}><span>Home</span></AppLink></li>
+        <li><AppLink to={'/'}><span>Products</span></AppLink></li>
+        <li><AppLink to={'/about-us'}><span>About Us</span></AppLink></li>
       </ul>
     </nav>
   );
